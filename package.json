@@ -2,9 +2,9 @@
   "name": "multi-host-proxy",
   "version": "1.0.0",
   "description": "A Node.js proxy for connecting to multiple remote hosts",
-  "main": "proxy.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node proxy.js",
+    "start": "node server.js",
     "install": "./install.sh"
   },
   "dependencies": {
