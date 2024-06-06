@@ -29,12 +29,18 @@ done
 # Minta input dan validasi port lokal
 for (( i=1; i<=$numHosts; i++ )); do
   while true; do
-    read -p "Masukkan LOCAL_PORT$i: " localPort
+    read -p "Masukkan LOCAL_PORT$i (0 untuk port dinamis): " localPort
 
-    # Cek apakah port valid (angka antara 1024 dan 65535)
-    if [[ ! $localPort =~ ^[1-9][0-9]{3,4}$ ]]; then
-      echo "Port tidak valid. Harap masukkan angka antara 1024 dan 65535."
+    # Cek apakah port valid (angka 0 atau antara 1024 dan 65535)
+    if [[ ! ( $localPort =~ ^[0-9]+$ && ( $localPort -eq 0 || ( $localPort -ge 1024 && $localPort -le 65535 ) ) ) ]]; then
+      echo "Port tidak valid. Harap masukkan angka 0 atau antara 1024 dan 65535."
       continue
+    fi
+
+    # Jika port 0, lewati pengecekan penggunaan port
+    if [[ $localPort -eq 0 ]]; then
+      echo "LOCAL_PORT$i=$localPort" >> .env
+      break
     fi
 
     # Cek apakah port sudah digunakan (coba ss dulu, lalu netstat)
