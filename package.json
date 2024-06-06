@@ -1,0 +1,16 @@
+
+  "name": "multi-host-proxy",
+  "version": "1.0.0",
+  "description": "A Node.js proxy for connecting to multiple remote hosts",
+  "main": "proxy.js",
+  "scripts": {
+    "start": "node proxy.js",
+    "install": "./install.sh"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {},
+  "author": "DzT13",
+  "license": "ISC"
+}
