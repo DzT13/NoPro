@@ -1,4 +1,4 @@
-
+{
   "name": "multi-host-proxy",
   "version": "1.0.0",
   "description": "A Node.js proxy for connecting to multiple remote hosts",
