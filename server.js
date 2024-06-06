@@ -3,26 +3,28 @@ const net = require('net');
 
 process.on('uncaughtException', console.error);
 
-// Array untuk menyimpan konfigurasi semua remote host
+// Array untuk menyimpan konfigurasi semua remote host dan port
 const remoteHosts = [];
+// Array untuk menyimpan port lokal yang digunakan
+const localPorts = [];
+
+// Baca konfigurasi dari file .env
 for (let i = 1; i <= 5; i++) {
   const host = process.env[`REMOTE_HOST${i}`];
   const port = process.env[`REMOTE_PORT${i}`];
-  if (host && port) {
+  const localPort = process.env[`LOCAL_PORT${i}`]; // Baca juga local port
+  if (host && port && localPort) {
     remoteHosts.push({ host, port });
+    localPorts.push(parseInt(localPort, 10)); // Ubah localPort menjadi integer
   }
 }
 
-// Array untuk menyimpan port lokal yang digunakan
-const localPorts = [];
-for (let i = 1; i <= remoteHosts.length; i++) {
-  localPorts.push(process.env[`LOCAL_PORT${i}`] || 2020 + i); // Default mulai dari 2021
-}
-
 if (remoteHosts.length === 0) {
-  console.error('Error: Missing environment variables for remote hosts!');
+  console.error('Error: No remote host configurations found in .env!');
   process.exit(1);
 }
+
+const localHost = process.env.LOCAL_HOST || '0.0.0.0';
 
 function handleConnection(remoteHost, remotePort) {
   return (localSocket) => {
@@ -42,7 +44,19 @@ function handleConnection(remoteHost, remotePort) {
       console.log(`>>> ${remoteHost} - connection #%d from %s:%d`, serverIndex !== -1 ? servers[serverIndex].connections : '?', localSocket.remoteAddress, localSocket.remotePort);
     });
 
-    // ... (Penanganan data dan drain sama seperti sebelumnya)
+    localSocket.on('data', (data) => {
+      console.log(`>>> ${remoteHost} - %s:%d - writing data to remote`, localSocket.remoteAddress, localSocket.remotePort);
+      if (!remoteSocket.write(data)) {
+        localSocket.pause();
+      }
+    }).on('drain', () => remoteSocket.resume());
+
+    remoteSocket.on('data', (data) => {
+      console.log(`>>> ${remoteHost} - %s:%d - writing data to local`, localSocket.remoteAddress, localSocket.remotePort);
+      if (!localSocket.write(data)) {
+        remoteSocket.pause();
+      }
+    }).on('drain', () => localSocket.resume());
 
     localSocket.on('close', () => {
       clearInterval(reconnectInterval);
@@ -75,6 +89,7 @@ function handleConnection(remoteHost, remotePort) {
     });
   };
 }
+
 
 // Array untuk menyimpan objek server
 const servers = [];
