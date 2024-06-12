@@ -85,4 +85,7 @@ done
 echo "LOCAL_HOST=0.0.0.0" >> .env
 
 echo "File .env telah dibuat. Anda dapat mengeditnya lebih lanjut jika diperlukan."
-echo "Jalankan 'npm server.js' untuk memulai proxy."
+echo "Cara jalankan Aplikasi
+sudo screen -dmS NoPro npm start
+sudo screen -r 
+untuk memulai proxy."
