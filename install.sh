@@ -1,5 +1,23 @@
 #!/bin/bash
 
+# Periksa apakah npm terinstal
+if ! command -v npm &> /dev/null; then
+  echo "npm tidak ditemukan. Menginstal npm..."
+
+  # Instal npm (sesuaikan perintah ini dengan sistem operasi Anda)
+  if command -v apt &> /dev/null; then
+    sudo apt update
+    sudo apt install -y nodejs npm
+  elif command -v yum &> /dev/null; then
+    sudo yum install -y nodejs npm
+  else
+    echo "Tidak dapat menginstal npm secara otomatis. Silakan instal secara manual."
+    exit 1
+  fi
+
+  echo "npm telah berhasil diinstal."
+fi
+
 echo "Selamat datang di Installer Proxy!"
 echo "Berapa banyak remote host yang ingin Anda jalankan (1-5)?"
 read numHosts
@@ -67,4 +85,4 @@ done
 echo "LOCAL_HOST=0.0.0.0" >> .env
 
 echo "File .env telah dibuat. Anda dapat mengeditnya lebih lanjut jika diperlukan."
-echo "Jalankan 'node server.js' untuk memulai proxy."
+echo "Jalankan 'npm server.js' untuk memulai proxy."
