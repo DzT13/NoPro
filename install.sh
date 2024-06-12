@@ -67,4 +67,4 @@ done
 echo "LOCAL_HOST=0.0.0.0" >> .env
 
 echo "File .env telah dibuat. Anda dapat mengeditnya lebih lanjut jika diperlukan."
-echo "Jalankan 'node proxy.js' untuk memulai proxy."
+echo "Jalankan 'node server.js' untuk memulai proxy."
