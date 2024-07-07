@@ -1,23 +1,16 @@
 {
   "name": "multi-host-proxy",
   "version": "1.0.0",
-  "description": "A Node.js TCP proxy for connecting to multiple remote hosts, enabling load balancing and failover capabilities.",
+  "description": "A Node.js proxy for connecting to multiple remote hosts",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "install": "./install.sh"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/DzT13/NoPro.git" 
-  },
-  "keywords": ["proxy", "TCP", "Node.js", "multi-host", "load-balancing", "failover"],
   "dependencies": {
-    "dotenv": "^10.0.3"
+    "dotenv": "^16.0.3"
   },
-  "engines": {
-    "node": ">=10.0.0"
-  },
+  "devDependencies": {},
   "author": "DzT13",
   "license": "ISC"
 }
