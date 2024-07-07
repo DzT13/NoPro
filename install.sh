@@ -33,11 +33,17 @@ get_valid_port() {
             echo "Port $port belum dibuka di UFW. Apakah Anda ingin membukanya sekarang? (y/n)"
             read ufwChoice
             if [[ $ufwChoice == "y" ]]; then
-              if ! sudo ufw allow $port; then
-                echo "Gagal membuka port $port di UFW. Pastikan Anda memiliki hak akses sudo dan UFW dikonfigurasi dengan benar."
+              # Check if we have root privileges
+              if [[ $EUID -ne 0 ]]; then
+                echo "Anda perlu hak akses root untuk membuka port $port di UFW. Silakan jalankan script ini dengan sudo."
                 continue
               else
-                echo "Port $port telah dibuka di UFW."
+                if ! sudo ufw allow $port; then
+                  echo "Gagal membuka port $port di UFW. Pastikan UFW dikonfigurasi dengan benar."
+                  continue
+                else
+                  echo "Port $port telah dibuka di UFW."
+                fi
               fi
             else
               echo "Pilih port lain atau buka port $port di UFW secara manual."
