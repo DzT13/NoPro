@@ -13,7 +13,7 @@
   },
   "keywords": ["proxy", "TCP", "Node.js", "multi-host", "load-balancing", "failover"],
   "dependencies": {
-    "dotenv": "^16.0.3"
+    "dotenv": "^10.0.3"
   },
   "engines": {
     "node": ">=10.0.0"
