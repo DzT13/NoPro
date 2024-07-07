@@ -59,8 +59,8 @@ if ! command -v npm &> /dev/null; then
 fi
 
 # Install Node.js dependencies (automatically)
-echo "Menginstal dependensi Node.js..."
-npm install
+#echo "Menginstal dependensi Node.js..."
+#npm install
 
 echo "Selamat datang di Installer Proxy!"
 echo "Berapa banyak remote host yang ingin Anda jalankan (1-5)?"
