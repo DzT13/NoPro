@@ -16,7 +16,7 @@
     "dotenv": "^16.0.3"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=10.0.0"
   },
   "author": "DzT13",
   "license": "ISC"
